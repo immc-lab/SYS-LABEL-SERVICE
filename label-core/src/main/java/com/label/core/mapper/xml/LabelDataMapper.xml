@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.label.core.mapper.LabelDataMapper">
+    <insert id="batchInsert">
+        insert into tb_label_detail (label_areaText,label_id,beginTime,endTime,label_talk,audio_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.labelText},#{item.id},#{item.beginTime},#{item.endTime},#{item.talk},#{key})
+        </foreach>
+
+
+    </insert>
+    <update id="upData">
+        update tb_label_data set translation_ch = #{text},state = "2"  where id = #{key}
+    </update>
+    <delete id="remove">
+        DELETE FROM tb_label_detail
+        WHERE audio_id = #{key};
+    </delete>
+
+
+    <select id="getLabelAudioDataByKey" resultType="String">
+        select
+            `url`
+        from
+            tb_label_data
+        where id = #{key}
+    </select>
+    <select id="getSaveEditData" resultType="com.label.core.pojo.vo.Label.GetSaveEditDataItem">
+        select label_areaText,beginTime,endTime,label_id,label_talk
+        from tb_label_detail
+        where audio_id = #{key}
+    </select>
+
+</mapper>
