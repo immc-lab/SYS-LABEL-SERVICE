@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.label.core.mapper.ModelDataMapper">
+    <insert id="insertIntoModel">
+        insert into
+            tb_model (model_id,createTime,updateTime,modelName,json)
+        values
+            (#{key},#{createTime},#{updateTime}#{name},#{json})
+    </insert>
+    <update id="updateModel">
+        update
+            tb_model
+        set
+           `json` = #{json},
+            modelName = #{name},
+            updateTime = #{upDateTime}
+        where
+            model_id = #{key}
+    </update>
+
+
+    <delete id="DeleteModelByKey">
+        DELETE FROM tb_model
+        WHERE model_id = #{key};
+    </delete >
+
+
+    <select id="getAllModel" resultType="com.label.core.pojo.vo.model.Model">
+        select
+            model_id,createTime,updateTime,modelName
+        from
+            tb_model
+    </select>
+    <select id="getSaveEditData" resultType="com.label.core.pojo.vo.Label.GetSaveEditDataItem">
+        select label_areaText,beginTime,endTime,label_id,label_talk
+        from tb_label_detail
+        where audio_id = #{key}
+    </select>
+    <select id="getModelByKey" resultType="String">
+        select
+            json
+        from
+            tb_model
+        where
+            model_id = #{key};
+    </select>
+
+</mapper>
