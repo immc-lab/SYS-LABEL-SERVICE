@@ -72,4 +72,15 @@ public class ModeServiceImpl implements ModelService {
     public String getModelByKey(String key) {
         return mapper.getModelByKey(key);
     }
+
+    @Override
+    public boolean setMainModel(String key) {
+        try {
+            mapper.setMainModel(key);
+        }catch (Exception e){
+            log.error("更新主模型失败！");
+            return false;
+        }
+        return true;
+    }
 }

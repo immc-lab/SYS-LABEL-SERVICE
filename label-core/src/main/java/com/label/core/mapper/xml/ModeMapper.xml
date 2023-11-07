@@ -5,7 +5,7 @@
         insert into
             tb_model (model_id,createTime,updateTime,modelName,json)
         values
-            (#{key},#{createTime},#{updateTime}#{name},#{json})
+            (#{key},#{createTime},#{updateTime},#{name},#{json})
     </insert>
     <update id="updateModel">
         update
@@ -17,6 +17,21 @@
         where
             model_id = #{key}
     </update>
+    <update id="setMainModel">
+      <![CDATA[
+         update
+             tb_model
+         set
+             main = "0";
+
+        update
+            tb_model
+        set
+            main = "1"
+        where
+            model_id = #{key};
+        ]]>
+    </update>
 
 
     <delete id="DeleteModelByKey">
@@ -27,7 +42,7 @@
 
     <select id="getAllModel" resultType="com.label.core.pojo.vo.model.Model">
         select
-            model_id,createTime,updateTime,modelName
+            model_id,createTime,updateTime,modelName,main
         from
             tb_model
     </select>

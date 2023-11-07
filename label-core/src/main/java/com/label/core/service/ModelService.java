@@ -14,4 +14,6 @@ public interface ModelService {
     public List<Model> getAllModel();
 
     public String getModelByKey(String key);
+
+    public boolean setMainModel(String key);
 }

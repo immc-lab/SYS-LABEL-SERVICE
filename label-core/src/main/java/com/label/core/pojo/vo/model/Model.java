@@ -10,6 +10,8 @@ public class Model {
     @JsonProperty("key")
     private String modelId;
 
+    private String main;
+
     private String createTime;
 
     private String updateTime;

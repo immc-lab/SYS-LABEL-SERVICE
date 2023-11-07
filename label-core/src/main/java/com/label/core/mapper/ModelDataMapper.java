@@ -30,4 +30,6 @@ public interface ModelDataMapper extends BaseMapper<LabelDataItem> {
 
         String getModelByKey(@Param("key") String key);
 
+        Long setMainModel(@Param("key") String key);
+
 }

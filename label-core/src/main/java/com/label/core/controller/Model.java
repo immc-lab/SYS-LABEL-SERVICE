@@ -1,15 +1,11 @@
 package com.label.core.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.label.common.result.R;
 import com.label.common.util.SnowflakeIdUtil;
-import com.label.core.pojo.vo.Label.GetMusicLabelListReq;
-import com.label.core.pojo.vo.Label.GetMusicLabelListRes;
-import com.label.core.pojo.vo.Label.LabelDataItem;
+import com.label.core.pojo.vo.model.DeleteModelByKeyReq;
 import com.label.core.pojo.vo.model.SaveModelDataReq;
-import com.label.core.service.LabelDataService;
 import com.label.core.service.ModelService;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.jws.WebParam;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -37,7 +31,7 @@ public class Model {
         boolean ok = false;
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(req);
-        if("upDate".equals(req.getType())&& !StringUtils.isNullOrEmpty(req.getKey())){
+        if("update".equals(req.getType())&& !StringUtils.isNullOrEmpty(req.getKey())){
             ok = modelservice.updateModel(req.getKey(),json,req.getName());
         }
         if("add".equals(req.getType())){
@@ -61,5 +55,52 @@ public class Model {
     }
 
 
+//删除模型
+    @PostMapping("/core/deleteModelByKey")
+    public R deleteModelByKey(@RequestBody DeleteModelByKeyReq req)  {
+
+        try {
+            modelservice.deleteByKey(req.getKey());
+        }catch (Exception e) {
+            log.error("删除模板失败！");
+            log.error(e);
+            return R.error().message("删除模板失败！");
+        }
+        return R.ok();
+    }
+
+    @PostMapping("/core/getModelByKey")
+    public R getModelByKey(@RequestBody DeleteModelByKeyReq req) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String modelJson;
+        SaveModelDataReq res = null;
+        try {
+             modelJson = modelservice.getModelByKey(req.getKey());
+             if(!StringUtils.isNullOrEmpty(modelJson)){
+                  res = objectMapper.readValue(modelJson,SaveModelDataReq.class);
+            }
+        }catch (Exception e) {
+            log.error("查找模板失败！");
+            log.error(e);
+            return R.error().message("查找模板失败！");
+        }
+        if(res != null){
+            return R.ok().data(res);
+        }
+        return R.error();
+    }
+
+//设置主模型
+    @PostMapping("/core/applyByKey")
+    public R applyByKey(@RequestBody DeleteModelByKeyReq req)  {
+        try {
+            modelservice.setMainModel(req.getKey());
+        }catch (Exception e) {
+            log.error("更新主模板失败！");
+            log.error(e);
+            return R.error().message("更新主模板失败！");
+        }
+        return R.ok();
+    }
 
 }
