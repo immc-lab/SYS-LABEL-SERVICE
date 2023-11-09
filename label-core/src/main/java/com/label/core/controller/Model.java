@@ -93,6 +93,7 @@ public class Model {
 //设置主模型
     @PostMapping("/core/applyByKey")
     public R applyByKey(@RequestBody DeleteModelByKeyReq req)  {
+
         try {
             modelservice.setMainModel(req.getKey());
         }catch (Exception e) {
