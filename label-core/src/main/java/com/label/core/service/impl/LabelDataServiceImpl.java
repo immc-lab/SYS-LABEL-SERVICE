@@ -52,7 +52,19 @@ public class LabelDataServiceImpl extends ServiceImpl<LabelDataMapper,LabelDataI
     }
 
     @Override
-    public List<GetSaveEditDataItem> getSaveEditDataByKey(String key) {
+    public String getSaveEditDataByKey(String key) {
          return labelDataMapper.getSaveEditData(key);
+    }
+
+    @Override
+    public boolean saveLabelData(String key, String json) {
+        try {
+            labelDataMapper.saveLabelData(key, json);
+        }catch (Exception e){
+            log.error("更新保存的标注失败！");
+            return false;
+        }
+        return true;
+
     }
 }

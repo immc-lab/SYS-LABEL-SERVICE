@@ -59,5 +59,13 @@
         where
             model_id = #{key};
     </select>
+    <select id="getMainModel" resultType="java.lang.String">
+        select
+            json
+        from
+            tb_model
+        where
+            main = "1"
+    </select>
 
 </mapper>

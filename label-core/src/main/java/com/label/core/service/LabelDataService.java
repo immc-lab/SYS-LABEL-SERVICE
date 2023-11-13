@@ -13,5 +13,7 @@ public interface LabelDataService {
 
     public boolean handleCommitAudioData( AudioLabelDataCommitReq req);
 
-    public List<GetSaveEditDataItem> getSaveEditDataByKey(String key);
+    public String getSaveEditDataByKey(String key);
+
+    public boolean saveLabelData (String key,String json);
 }

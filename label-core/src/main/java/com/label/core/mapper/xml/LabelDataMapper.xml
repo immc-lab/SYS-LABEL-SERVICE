@@ -12,6 +12,21 @@
     <update id="upData">
         update tb_label_data set translation_ch = #{text},state = "2"  where id = #{key}
     </update>
+    <update id="saveLabelData">
+        <![CDATA[
+        delete from
+            tb_savedata
+        where
+            `key` = #{key};
+
+        insert into
+            tb_savedata
+        (data_json,`key`)
+        values
+            (#{json},#{key})
+        ]]>
+
+    </update>
     <delete id="remove">
         DELETE FROM tb_label_detail
         WHERE audio_id = #{key};
@@ -25,10 +40,10 @@
             tb_label_data
         where id = #{key}
     </select>
-    <select id="getSaveEditData" resultType="com.label.core.pojo.vo.Label.GetSaveEditDataItem">
-        select label_areaText,beginTime,endTime,label_id,label_talk
-        from tb_label_detail
-        where audio_id = #{key}
+    <select id="getSaveEditData" resultType="string">
+        select data_json
+        from tb_saveData
+        where `key` = #{key}
     </select>
 
 </mapper>

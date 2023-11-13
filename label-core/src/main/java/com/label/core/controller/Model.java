@@ -104,4 +104,22 @@ public class Model {
         return R.ok();
     }
 
+    @PostMapping("/core/getMainModel")
+    public R getMainModel()  {
+        String modelJson;
+        SaveModelDataReq res = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            modelJson = modelservice.getMainModel();
+            if(!StringUtils.isNullOrEmpty(modelJson)){
+                res = objectMapper.readValue(modelJson,SaveModelDataReq.class);
+            }
+        }catch (Exception e) {
+            log.error("获取主模板失败！");
+            log.error(e);
+            return R.error().message("获取主模板失败！");
+        }
+        return R.ok().data(res);
+    }
+
 }

@@ -16,4 +16,6 @@ public interface ModelService {
     public String getModelByKey(String key);
 
     public boolean setMainModel(String key);
+
+    public String getMainModel();
 }

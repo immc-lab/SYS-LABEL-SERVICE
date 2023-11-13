@@ -83,4 +83,9 @@ public class ModeServiceImpl implements ModelService {
         }
         return true;
     }
+
+    @Override
+    public String getMainModel() {
+      return   mapper.getMainModel();
+    }
 }

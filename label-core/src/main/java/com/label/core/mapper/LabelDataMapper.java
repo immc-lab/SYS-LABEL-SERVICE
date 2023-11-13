@@ -21,6 +21,8 @@ public interface LabelDataMapper extends BaseMapper<LabelDataItem> {
 
       long remove(String key);
 
-      List<GetSaveEditDataItem> getSaveEditData(@Param("key") String key);
+     String getSaveEditData(@Param("key") String key);
+
+     Long saveLabelData(@Param("key") String key,@Param("json") String json);
 
 }

@@ -1,12 +1,14 @@
 package com.label.core.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.label.common.result.R;
 import com.label.core.pojo.vo.Label.*;
+import com.label.core.pojo.vo.model.SaveModelDataReq;
 import com.label.core.service.LabelDataService;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Encoder;
 
@@ -15,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Log4j2
@@ -80,15 +80,36 @@ public class Label {
     }
 
     @PostMapping("/core/getSaveEditData")
-    public R getSaveEditData(@RequestBody GetSaveEditDataReq req){
+    public R getSaveEditData(@RequestBody SaveLabelDataRes req) {
         System.out.println(req);
-        List<GetSaveEditDataItem> list = new ArrayList<>();
+        String modelJson = null;
+        SaveLabelDataRes res = null;
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-           list = labelDataService.getSaveEditDataByKey(req.getKey());
-        }catch (Exception e){
+            modelJson = labelDataService.getSaveEditDataByKey(req.getKey());
+            if (!StringUtils.isNullOrEmpty(modelJson)) {
+                res = objectMapper.readValue(modelJson, SaveLabelDataRes.class);
+            }
+        } catch (Exception e) {
             log.error("通过key查询保存的编辑数据失败!");
             return R.error();
         }
-       return R.ok().data(list);
+        return R.ok().data(res);
+    }
+
+
+    @PostMapping("/core/saveEditData")
+    public R saveEditData(@RequestBody SaveLabelDataRes req) throws JsonProcessingException {
+        System.out.println(req);
+        SaveModelDataReq res = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(req);
+        try {
+             labelDataService.saveLabelData(req.getKey(),json);
+        } catch (Exception e) {
+            log.error("通过key查询保存的编辑数据失败!");
+            return R.error();
+        }
+        return R.ok();
     }
 }
