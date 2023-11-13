@@ -10,6 +10,12 @@ public class SaveLabelDataAreaItem {
     @JsonProperty("id")
     private String id;
 
+    @JsonProperty("startTime")
+    private String startTime;
+
+    @JsonProperty("endTime")
+    private String endTime;
+
     @JsonProperty("saveData")
     private List<SaveLabelDataItem> saveData;
 }
