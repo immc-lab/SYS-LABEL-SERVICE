@@ -39,7 +39,7 @@ public class Project {
         public R getProjectList(){
             List<SaveProjectReq> list = new ArrayList<>();
             try {
-                projectService.getProjectList();
+                list = projectService.getProjectList();
             }catch (Exception e){
                 log.error("获取项目列表失败！");
                 return R.error();
