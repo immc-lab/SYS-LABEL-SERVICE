@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.label.core.mapper.ProjectMapper">
+
+    <insert id="updateProject" parameterType="map">
+        insert  into
+        tb_project
+        (`name`,startTime,endTime,projectArea,projectType,`key`)
+        values
+        (#{req.name},#{req.startTime},#{req.endTime},#{req.projectArea},#{req.projectType},#{key})
+
+
+
+    </insert>
+    <insert id="saveAudioDataBykey">
+        insert into
+        tb_label_data
+        (format,url,model_key,key,mission_key,project_key,audioName)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.format},#{item.path},#{item.modelKey},#{item.key},#{item.missionKey},#{item.projectKey},#{item.audioName})
+        </foreach>
+    </insert>
+    <update id="saveNewMission">
+    <![CDATA[
+        delete from
+        tb_mission
+        where
+        key = #{key};
+
+
+        insert into
+        tb_mission
+        (mission_name,creator,key,team_key,create_time,project_key,team_name)
+        values
+        (#{req.missionName},#{req.creator},#{key},#{req.teamKey},#{createTime},#{req.projectKey},#{req.teamName})
+
+        ]]>
+
+
+
+    </update>
+    <update id="updateProjectTotal">
+        update
+        tb_project
+        set
+        total = total + #{count}
+        where key = #{key}
+
+    </update>
+    <update id="updateMissionCount">
+        update
+            tb_mission
+        set
+            total = total + #{count}
+        where key = #{key}
+    </update>
+    <update id="updateProjectPass">
+        update
+            tb_project
+        set
+            pass = pass + #{count}
+        where key = #{key}
+
+    </update>
+    <update id="updateMissionPass">
+        update
+            tb_mission
+        set
+            pass = pass + #{count}
+        where key = #{key}
+
+    </update>
+    <select id="getProjectList" resultType="com.label.core.pojo.vo.project.SaveProjectReq">
+        select
+        *
+        from
+        tb_project
+    </select>
+    <select id="getMissionListByProjectKey" resultType="com.label.core.pojo.vo.project.MissionList">
+        select *  from tb_mission where project_key = #{projectKey}
+
+    </select>
+</mapper>
