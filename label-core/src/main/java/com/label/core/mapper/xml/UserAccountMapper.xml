@@ -8,6 +8,64 @@
             (#{user_account},#{user_password},#{name},#{user_id})
 
     </insert>
+    <insert id="saveNewUser">
+         insert into
+         tb_user
+         (roles,user_account,
+          user_password,`name`,
+          manage_team_key,
+          belong_team_key,
+          user_key,
+          belong_team_name,
+          manage_team_name,
+          roles_name,
+          createTime)
+         values
+         (#{roles},
+          #{req.account},
+          #{req.password},
+          #{req.username},
+          #{manageTeam},
+          #{belongTeam},
+          #{user_key},
+          #{belongTeamName},
+          #{manageTeamName},
+          #{rolesName},
+          #{createTime})
+
+    </insert>
+    <update id="updateUser">
+        update tb_user
+        set
+            user_account = #{req.account},
+            user_password = #{req.password},
+            `name` = #{req.username},
+            manage_team_key = #{manageTeam},
+            roles = #{roles},
+            belong_team_key = #{belongTeam},
+            belong_team_name = #{belongTeamName},
+            manage_team_name = #{manageTeamName},
+            roles_name = #{rolesName}
+        where
+            user_key = #{req.user_key}
+
+
+
+
+    </update>
+    <update id="updateUserLoginMessage">
+        update
+        tb_user
+        set
+        lastLoginTime = #{lastLoginTime},
+        ip = #{ip}
+        where
+        user_key = #{userKey}
+
+
+
+
+    </update>
 
     <select id="searchUser" resultType="com.label.core.pojo.entity.UserAccount">
         select
@@ -34,6 +92,27 @@
         from
             tb_user
         where
-            user_id = #{user_id}
+            user_key = #{user_key}
+    </select>
+    <select id="duplicateCheck" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM tb_user
+        WHERE
+        user_account = #{account}
+    </select>
+    <select id="getAllUser" resultType="com.label.core.pojo.vo.admin.UserItem">
+        select
+        user_account,
+       `name`,
+       id,user_key,
+       `state`,
+       roles_name,
+       createTime,
+       belong_team_name,
+       manage_team_name,
+       lastLoginTime,
+        ip
+        from
+        tb_user
     </select>
 </mapper>

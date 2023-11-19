@@ -25,16 +25,13 @@ import lombok.Data;
 //        phone?: string;
 public class CurrentUserMessage {
 
-    @JsonProperty("userid")
-    String userId;
-    String avatar;
-    String email;
-    String signature;
-    String title;
-    String group;
-    String country;
-    String access;
-    String address;
-    String phone;
-    String name;
+    private String  teamKey;
+    // 账户状态  1 正常，0，禁用
+    private String  state;
+    //账户类型  0 超管，1，项目管理员,2 团队管理员, 3，质检员,4标注员 多角色用户可以以逗号隔开
+    private String type;
+
+    private String name;
+
+    private String userAccount;
 }

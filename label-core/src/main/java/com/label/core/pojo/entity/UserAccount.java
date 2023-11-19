@@ -24,11 +24,6 @@ import java.time.LocalDateTime;
 //@ApiModel(value="UserAccount对象", description="用户账户")
 public class UserAccount implements Serializable {
 
-    private String userId;
+    private String userKey;
 
-    private String userPassword;
-
-    private String name;
-
-    private String userAccount;
 }

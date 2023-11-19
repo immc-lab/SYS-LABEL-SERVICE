@@ -19,6 +19,6 @@ public class AdminWebConfig implements WebMvcConfigurer {
 //       excludePathPatterns("/","/login")表示放行“/”与“/login”请求
 //       如果有静态资源的时候可以在这个地方放行
                 .excludePathPatterns("/admin/core/login","/label/core/getLabelAudioDataByKey","/model/core/saveModelData","/model/core/getModelAll","/model/core/deleteModelByKey","/model/core/getModelByKey","/model/core/applyByKey","/model/core/getMainModel")
-                .excludePathPatterns("/sms/core/sendMailMessage","/admin/core/register","/label/core/getMusicLabelList","/label/core/saveOrSubmitLabelData","/label/core/getSaveEditData","/project/core/saveProjectData","/project/core/getProjectList");
+                .excludePathPatterns("/admin/core/saveOrUpdateNewUser","/admin/core/getAllUser");
     }
 }
