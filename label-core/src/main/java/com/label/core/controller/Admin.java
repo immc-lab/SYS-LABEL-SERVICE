@@ -50,13 +50,16 @@ public class Admin {
     public R login(@RequestBody LoginReq loginReq, HttpServletRequest request) throws NoSuchAlgorithmException {
         String userKey = userInfoService.login(loginReq.getAccount(),Sha256.cryBySh256(loginReq.getPassword()),request);
         if (!StringUtils.isNullOrEmpty(userKey)) {
+            if("409".equals(userKey)){
+                return R.setResult(ResponseEnum.ACCOUNT_DISABLE);
+            }
             //添加session
             HttpSession session = request.getSession();
             //拦截器检查 存储用户id
             session.setAttribute("loginUser", userKey);
-            return R.ok().message(ResponseEnum.SUCCESS.getMessage());
+            return R.setResult(ResponseEnum.SUCCESS);
         } else {
-            return R.error().message(ResponseEnum.LOGIN_PASSWORD_ERROR.getMessage());
+            return R.setResult(ResponseEnum.LOGIN_PASSWORD_ERROR);
         }
     }
 
@@ -104,5 +107,15 @@ public class Admin {
             return R.error();
         }
         return R.ok().data(userList);
+    }
+
+    @PostMapping("/core/disableAccountByKey")
+    public R disableAccountByKey(@RequestBody  DisableAccountKeyReq req) {
+        try{
+            userInfoService.disableAccountByKey(req.getUserKey(), req.getState());
+        }catch (Exception e){
+            return R.error().message("系统忙！请稍候重试！");
+        }
+        return R.ok();
     }
 }

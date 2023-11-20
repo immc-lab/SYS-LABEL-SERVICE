@@ -25,5 +25,8 @@ public interface UserInfoService {
     Long duplicateChecking(String account);
 
     List<UserItem> getAllUser();
+
+    void disableAccountByKey(String userKey,String state);
+
 }
 

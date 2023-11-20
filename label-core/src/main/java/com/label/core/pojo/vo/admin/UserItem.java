@@ -15,11 +15,17 @@ public class UserItem {
 
     private String state;
 
+    private String belongTeamKey;
+
+    private String manageTeamKey;
+
     private String belongTeamName;
 
-    private String manageTeamName;
+    private String manageTeamName = "";
 
-    private String rolesName;
+    private String roles;
+
+    private String rolesName = "";
 
     private String createTime;
 

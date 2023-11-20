@@ -26,4 +26,6 @@ public class UserAccount implements Serializable {
 
     private String userKey;
 
+    private String state;
+
 }

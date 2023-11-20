@@ -20,7 +20,7 @@ public class R {
     public static R error(){
         R r = new R();
         r.setStatus(ResponseEnum.ERROR.getCode());
-        r.setStatus(ResponseEnum.ERROR.getMessage());
+        r.setMessage(ResponseEnum.ERROR.getMessage());
         return r;
     }
     public static R setResult(ResponseEnum responseEnum){

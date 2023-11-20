@@ -38,7 +38,10 @@
         update tb_user
         set
             user_account = #{req.account},
-            user_password = #{req.password},
+            user_password = CASE
+                WHEN #{req.password} IS NOT NULL AND #{req.password} != '' THEN #{req.password}
+                ELSE user_password
+            END,
             `name` = #{req.username},
             manage_team_key = #{manageTeam},
             roles = #{roles},
@@ -63,6 +66,16 @@
         user_key = #{userKey}
 
 
+
+
+    </update>
+    <update id="disableAccount">
+        update
+        tb_user
+        set
+        state = #{state}
+        where
+        user_key = #{userKey}
 
 
     </update>
@@ -102,16 +115,7 @@
     </select>
     <select id="getAllUser" resultType="com.label.core.pojo.vo.admin.UserItem">
         select
-        user_account,
-       `name`,
-       id,user_key,
-       `state`,
-       roles_name,
-       createTime,
-       belong_team_name,
-       manage_team_name,
-       lastLoginTime,
-        ip
+        *
         from
         tb_user
     </select>

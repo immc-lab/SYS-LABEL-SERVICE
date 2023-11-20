@@ -64,4 +64,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     void updateUserLoginMessage(@Param("lastLoginTime") String lastLoginTime,
                                 @Param("ip") String ip,
                                 @Param("userKey") String userKey);
+
+    void disableAccount(@Param("userKey") String userKey, @Param("state") String state);
+
 }

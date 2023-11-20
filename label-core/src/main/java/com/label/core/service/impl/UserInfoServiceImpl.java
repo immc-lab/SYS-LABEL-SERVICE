@@ -29,6 +29,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (userAccounts.size() <= 0) {
             return "";
         } else {
+            //状态不正常
+            if(!"1".equals(userAccounts.get(0).getState())){
+                return "409";
+            }
             //记录登录的时间和ip地址;
             userInfo.updateUserLoginMessage(GetLocalDataTime.getTime(),request.getRemoteAddr(),userAccounts.get(0).getUserKey());
             return userAccounts.get(0).getUserKey();
@@ -74,5 +78,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public List<UserItem> getAllUser() {
        return userInfo.getAllUser();
+    }
+
+    @Override
+    public void disableAccountByKey(String userKey,String state) {
+
+        userInfo.disableAccount(userKey,state);
+
+
     }
 }

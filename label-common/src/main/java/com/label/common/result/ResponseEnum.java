@@ -32,6 +32,7 @@ public enum ResponseEnum {
     LOGIN_LOKED_ERROR("210", "用户被锁定"),
     LOGIN_AUTH_ERROR("-211", "未登录"),
     Check_Code_ERROR("-211", "请先检验验证码"),
+    ACCOUNT_DISABLE("409","账户被禁用,请联系管理员"),
 
 
 
