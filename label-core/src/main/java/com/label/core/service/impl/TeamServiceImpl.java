@@ -3,6 +3,7 @@ package com.label.core.service.impl;
 import com.label.common.util.GetLocalDataTime;
 import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.mapper.TeamMapper;
+import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
 import com.label.core.service.TeamService;
@@ -40,5 +41,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Long checkNameRepeat(String teamName) {
         return teamMapper.checkNameRepeat(teamName);
+    }
+
+    @Override
+    public List<ManagerItem> getManagerByTeamKey(String teamKey) {
+       return teamMapper.getManagerByTeamKey(teamKey);
+
     }
 }

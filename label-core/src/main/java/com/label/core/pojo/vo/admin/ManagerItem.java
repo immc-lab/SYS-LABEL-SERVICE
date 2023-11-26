@@ -8,4 +8,6 @@ public class ManagerItem {
     private String userAccount;
 
     private String userKey;
+
+    private String name;
 }

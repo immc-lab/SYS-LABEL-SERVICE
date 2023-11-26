@@ -7,6 +7,8 @@ import java.util.List;
 @Data
 public class SaveOrUpDateTeamReq {
     private String teamName;
+    //team的唯一标志
+    private String teamKey;
 
     private List<String> managerName;
 

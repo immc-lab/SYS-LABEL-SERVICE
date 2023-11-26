@@ -3,6 +3,7 @@ package com.label.core.controller;
 import com.label.common.result.R;
 import com.label.common.result.ResponseEnum;
 import com.label.common.util.SnowflakeIdUtil;
+import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.project.SaveProjectReq;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
@@ -29,6 +30,20 @@ public class Team {
         List<TeamItem> teamList = new ArrayList<>();
         try {
             teamList = teamService.getAllTeam();
+            //查询此团队的管理员及名称
+            for(TeamItem item:teamList){
+                String teamKey = item.getTeamKey();
+                List<ManagerItem> managerList = teamService.getManagerByTeamKey(teamKey);
+                List<String> nameList = new ArrayList<>();
+                List<String> userKeyList = new ArrayList<>();
+                for(ManagerItem managerItem:managerList){
+                    nameList.add(managerItem.getName());
+                    userKeyList.add(managerItem.getUserKey());
+                }
+                item.setManagerName(String.join(",",nameList));
+                item.setManagerKey(String.join(",",userKeyList));
+            }
+
         } catch (Exception e) {
             log.error("获取项目失败！");
             return R.error();

@@ -1,5 +1,6 @@
 package com.label.core.service;
 
+import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
 
@@ -14,4 +15,5 @@ public interface TeamService {
 
     Long checkNameRepeat(String teamName);
 
+    List<ManagerItem> getManagerByTeamKey(String teamKey);
 }

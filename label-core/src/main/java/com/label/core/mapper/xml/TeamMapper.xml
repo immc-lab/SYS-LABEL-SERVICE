@@ -16,6 +16,8 @@
         manager_key = #{managerKey},
         manager_name = #{managerName},
         team_message = #{req.teamMessage}
+        where
+        team_key = #{req.teamKey}
     </update>
 
 
@@ -33,5 +35,13 @@
 
 
 
+    </select>
+    <select id="getManagerByTeamKey" resultType="com.label.core.pojo.vo.admin.ManagerItem">
+        select
+        name,user_key
+        from
+        tb_user
+        where
+        FIND_IN_SET(#{teamKey},manage_team_key) > 0;
     </select>
 </mapper>
