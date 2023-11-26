@@ -3,16 +3,13 @@ package com.label.core.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.entity.UserAccount;
-import com.label.core.pojo.vo.admin.GetAllUserRes;
+import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.admin.SaveNewUserReq;
 import com.label.core.pojo.vo.admin.UserItem;
-import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -66,5 +63,7 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
                                 @Param("userKey") String userKey);
 
     void disableAccount(@Param("userKey") String userKey, @Param("state") String state);
+
+    List<ManagerItem> getAllManager();
 
 }

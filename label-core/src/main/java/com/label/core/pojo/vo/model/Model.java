@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class Model {
     @JsonProperty("key")
-    private String modelId;
+    private String modelKey;
 
     private String main;
 

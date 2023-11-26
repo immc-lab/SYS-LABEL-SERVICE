@@ -7,6 +7,7 @@ import com.label.common.result.R;
 import com.label.core.pojo.vo.Label.*;
 import com.label.core.pojo.vo.model.SaveModelDataReq;
 import com.label.core.service.LabelDataService;
+import com.label.core.util.FileTransfer;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @Log4j2
@@ -78,7 +81,7 @@ public class Label {
         }
        return R.error();
     }
-
+    //获取保存的数据
     @PostMapping("/core/getSaveEditData")
     public R getSaveEditData(@RequestBody SaveLabelDataRes req) {
         System.out.println(req);
@@ -97,7 +100,7 @@ public class Label {
         return R.ok().data(res);
     }
 
-
+    //保存编辑数据
     @PostMapping("/core/saveEditData")
     public R saveEditData(@RequestBody SaveLabelDataRes req) throws JsonProcessingException {
         System.out.println(req);
@@ -111,5 +114,28 @@ public class Label {
             return R.error();
         }
         return R.ok();
+    }
+
+
+    //批量导出数据
+    @PostMapping("/core/exportExcelData")
+    public R exportExcelData(@RequestBody ExportExcelDataReq req) {
+        List<ExportExcelDataRes> res = new ArrayList<>();
+        List<FileTransferItem> pathList =  new ArrayList<>();
+        System.out.println(req);
+        try {
+            //待下载服务器地址列表
+            pathList =  labelDataService.exportExcelDataByKey(req);
+            for(FileTransferItem item:pathList){
+                ExportExcelDataRes resItem = new ExportExcelDataRes();
+                resItem.setFileBase64(FileTransfer.fileToBase64(item.getPath()));
+                resItem.setFileName(item.getFileName());
+                res.add(resItem);
+            }
+        } catch (Exception e) {
+            log.error("导出Excel失败！",e);
+            return R.error();
+        }
+        return R.ok().data(res);
     }
 }

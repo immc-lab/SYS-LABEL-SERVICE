@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.label.core.mapper.TeamMapper">
+    <insert id="saveOrUpDateTeam">
+        insert into
+        tb_team
+        (team_name,creator,team_key,create_time,manager_key,manager_name,team_message)
+        values
+        (#{req.teamName},#{req.creator},#{key},#{createTime},#{managerKey},#{managerName},#{req.teamMessage})
+    </insert>
+    <update id="updateTeam">
+        update
+        tb_team
+        set
+        team_name = #{req.teamName},
+        manager_key = #{managerKey},
+        manager_name = #{managerName},
+        team_message = #{req.teamMessage}
+    </update>
+
+
+    <select id="getAllTeam" resultType="com.label.core.pojo.vo.team.TeamItem">
+        select *
+        from
+        tb_team
+    </select>
+    <select id="checkNameRepeat" resultType="java.lang.Long">
+        select count(*)
+        from
+        tb_team
+        where
+        team_name = #{teamName}
+
+
+
+    </select>
+</mapper>

@@ -20,4 +20,8 @@ public class MissionList {
     private String teamKey;
     //项目key
     private String projectKey;
+
+    private String modelName;
+
+    private String modelKey;
 }

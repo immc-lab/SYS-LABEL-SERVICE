@@ -20,4 +20,7 @@ public class SaveProjectReq {
    //创建人
     private String creator;
 
+    private String key;
+    //类型，看是修还是新增
+    private String type;
 }

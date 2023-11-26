@@ -3,7 +3,7 @@
 <mapper namespace="com.label.core.mapper.ModelDataMapper">
     <insert id="insertIntoModel">
         insert into
-            tb_model (model_id,createTime,updateTime,modelName,json)
+            tb_model (model_key,createTime,updateTime,modelName,json)
         values
             (#{key},#{createTime},#{updateTime},#{name},#{json})
     </insert>
@@ -15,7 +15,7 @@
             modelName = #{name},
             updateTime = #{upDateTime}
         where
-            model_id = #{key}
+            model_key = #{key}
     </update>
     <update id="setMainModel">
       <![CDATA[
@@ -29,20 +29,20 @@
         set
             main = "1"
         where
-            model_id = #{key};
+            model_key = #{key};
         ]]>
     </update>
 
 
     <delete id="DeleteModelByKey">
         DELETE FROM tb_model
-        WHERE model_id = #{key};
+        WHERE model_key = #{key};
     </delete >
 
 
     <select id="getAllModel" resultType="com.label.core.pojo.vo.model.Model">
         select
-            model_id,createTime,updateTime,modelName,main
+            model_key,createTime,updateTime,modelName,main
         from
             tb_model
     </select>
@@ -57,7 +57,7 @@
         from
             tb_model
         where
-            model_id = #{key};
+            model_key = #{key};
     </select>
     <select id="getMainModel" resultType="java.lang.String">
         select

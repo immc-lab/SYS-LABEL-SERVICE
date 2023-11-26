@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Log4j2
@@ -117,5 +115,16 @@ public class Admin {
             return R.error().message("系统忙！请稍候重试！");
         }
         return R.ok();
+    }
+
+    @PostMapping("/core/getAllManager")
+    public R getAllManager() {
+        List<ManagerItem> managerList = new ArrayList<>();
+        try{
+            managerList = userInfoService.getAllManager();
+        }catch (Exception e){
+            return R.error().message("系统忙！请稍候重试！");
+        }
+        return R.ok().data(managerList);
     }
 }

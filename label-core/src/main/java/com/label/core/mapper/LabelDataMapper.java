@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.label.core.pojo.entity.UserAccount;
 import com.label.core.pojo.vo.Label.GetSaveEditDataItem;
 import com.label.core.pojo.vo.Label.LabelDataItem;
+import com.label.core.pojo.vo.Label.XmlDataItem;
 import com.label.core.pojo.vo.Label.commitItem;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,8 +22,14 @@ public interface LabelDataMapper extends BaseMapper<LabelDataItem> {
 
       long remove(String key);
 
-     String getSaveEditData(@Param("key") String key);
+      String getSaveEditData(@Param("key") String key);
 
-     Long saveLabelData(@Param("key") String key,@Param("json") String json);
+      Long saveLabelData(@Param("key") String key,@Param("json") String json);
+
+      List<XmlDataItem> getLabelJsonDataByProjectKey(@Param("projectKey") String projectKey);
+
+      List<XmlDataItem> getLabelJsonDataByMissionKey(@Param("missionKey") String missionKey);
+
+      String getModelByMissionKey(@Param("missionKey") String missionKey);
 
 }

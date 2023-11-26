@@ -20,4 +20,10 @@ public class SaveNewMissionReq {
    //创建人
     private String creator;
 
+    private String modelName;
+
+    private String modelKey;
+
+    private String type;
+
 }

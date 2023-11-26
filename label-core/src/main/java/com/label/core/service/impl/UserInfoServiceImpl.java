@@ -5,18 +5,13 @@ import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.mapper.UserAccountMapper;
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.entity.UserAccount;
-import com.label.core.pojo.vo.admin.GetAllUserRes;
-import com.label.core.pojo.vo.admin.RegisterReq;
-import com.label.core.pojo.vo.admin.SaveNewUserReq;
-import com.label.core.pojo.vo.admin.UserItem;
+import com.label.core.pojo.vo.admin.*;
 import com.label.core.service.UserInfoService;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
@@ -85,6 +80,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         userInfo.disableAccount(userKey,state);
 
+
+    }
+
+    @Override
+    public List<ManagerItem> getAllManager() {
+        return userInfo.getAllManager();
 
     }
 }

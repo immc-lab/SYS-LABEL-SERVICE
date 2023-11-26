@@ -119,4 +119,13 @@
         from
         tb_user
     </select>
+    <select id="getAllManager" resultType="com.label.core.pojo.vo.admin.ManagerItem">
+        select
+        user_account,user_key
+        from
+        tb_user
+        where
+        FIND_IN_SET('2',roles) > 0
+        and state ='1'
+    </select>
 </mapper>

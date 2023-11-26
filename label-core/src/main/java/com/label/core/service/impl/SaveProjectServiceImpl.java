@@ -69,4 +69,30 @@ public class SaveProjectServiceImpl implements ProjectService {
     public void updateMissionCount(long count,String key) {
         projectMapper.updateMissionCount(count,key);
     }
+
+    @Override
+    public int checkNameReapet(String name) {
+       return projectMapper.checkReapet(name);
+    }
+
+    @Override
+    public void updateMission(SaveNewMissionReq req) {
+        projectMapper.updateMission(req);
+    }
+
+    @Override
+    public void deleteMissionByKey(String missionKey) {
+        projectMapper.deleteMissionByKey(missionKey);
+    }
+
+    @Override
+    public void updateProject(SaveProjectReq req) {
+        projectMapper.updateProjectByKey(req);
+    }
+
+    @Override
+    public MissionList getMissionByKey(String key) {
+        List<MissionList> missionList = projectMapper.getMissionByKey(key);
+        return missionList.get(0);
+    }
 }

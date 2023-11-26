@@ -9,8 +9,6 @@
         values
         (#{req.name},#{req.startTime},#{req.endTime},#{req.projectArea},#{req.projectType},#{key})
 
-
-
     </insert>
     <insert id="saveAudioDataBykey">
         insert into
@@ -22,23 +20,11 @@
         </foreach>
     </insert>
     <update id="saveNewMission">
-    <![CDATA[
-        delete from
-        tb_mission
-        where
-        key = #{key};
-
-
         insert into
         tb_mission
-        (mission_name,creator,key,team_key,create_time,project_key,team_name)
+        (mission_name,creator,`key`,team_key,create_time,project_key,team_name,model_name,model_key)
         values
-        (#{req.missionName},#{req.creator},#{key},#{req.teamKey},#{createTime},#{req.projectKey},#{req.teamName})
-
-        ]]>
-
-
-
+        (#{req.missionName},#{req.creator},#{key},#{req.teamKey},#{createTime},#{req.projectKey},#{req.teamName},#{req.modelName},#{req.modelKey})
     </update>
     <update id="updateProjectTotal">
         update
@@ -71,6 +57,43 @@
         where key = #{key}
 
     </update>
+    <update id="updateMission">
+        update
+        tb_mission
+        set
+        mission_name = #{req.missionName}
+
+
+
+
+    </update>
+    <update id="updateProjectByKey">
+        update
+        tb_project
+        set
+        name = #{req.name},
+        startTime = #{req.startTime},
+        endTime = #{req.endTime},
+        projectType = #{req.projectType}
+        where
+        key = #{req.key}
+
+    </update>
+    <delete id="deleteMissionByKey">
+        delete from
+        tb_mission
+        where
+        key = #{missionKey}
+
+    </delete>
+    <select id="checkReapet" resultType="int">
+        select count(*)
+        from
+        tb_project
+        where
+        `name` = #{name}
+
+    </select>
     <select id="getProjectList" resultType="com.label.core.pojo.vo.project.SaveProjectReq">
         select
         *
@@ -79,6 +102,15 @@
     </select>
     <select id="getMissionListByProjectKey" resultType="com.label.core.pojo.vo.project.MissionList">
         select *  from tb_mission where project_key = #{projectKey}
+
+    </select>
+    <select id="getMissionByKey" resultType="com.label.core.pojo.vo.project.MissionList">
+         select *
+         from
+         tb_mission
+         where
+         `key` = #{key}
+
 
     </select>
 </mapper>

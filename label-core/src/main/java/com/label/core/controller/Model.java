@@ -23,8 +23,7 @@ import java.util.List;
 public class Model {
     @Resource
     private ModelService modelservice ;
-
-    //    用户注册
+    // 保存模板数据
     @PostMapping("/core/saveModelData")
     public R SaveModelData(@RequestBody SaveModelDataReq req) throws JsonProcessingException {
         //json格式保存

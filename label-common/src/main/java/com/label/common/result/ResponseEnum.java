@@ -33,6 +33,7 @@ public enum ResponseEnum {
     LOGIN_AUTH_ERROR("-211", "未登录"),
     Check_Code_ERROR("-211", "请先检验验证码"),
     ACCOUNT_DISABLE("409","账户被禁用,请联系管理员"),
+    ACCOUNT_REPEAT("101","名称重复请更换名称"),
 
 
 

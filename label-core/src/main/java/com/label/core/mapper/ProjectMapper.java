@@ -31,4 +31,14 @@ public interface ProjectMapper extends BaseMapper<SaveProjectReq> {
     Long updateProjectPass(@Param("count")long count,@Param("key") String key);
 
     Long updateMissionPass(@Param("count")long count,@Param("key") String key);
+
+    int checkReapet(@Param("name") String name);
+
+    void updateMission(@Param("req") SaveNewMissionReq req);
+
+    void deleteMissionByKey(@Param("missionKey") String missionKey);
+
+    void updateProjectByKey(@Param("req") SaveProjectReq req);
+
+    List<MissionList> getMissionByKey(@Param("key") String key);
 }

@@ -23,4 +23,14 @@ public interface ProjectService {
 
     void updateMissionCount(long count,String key);
 
+    int checkNameReapet(String missionName);
+
+    void updateMission(SaveNewMissionReq req);
+
+    void deleteMissionByKey(String missionKey);
+
+    void updateProject(SaveProjectReq req);
+
+    MissionList getMissionByKey(String key);
+
 }
