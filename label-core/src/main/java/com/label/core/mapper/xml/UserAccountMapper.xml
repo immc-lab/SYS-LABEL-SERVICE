@@ -34,6 +34,11 @@
           #{createTime})
 
     </insert>
+    <update id="addManagerKey">
+          UPDATE tb_user
+          SET manage_team_key = IFNULL(CONCAT(IFNULL(manage_team_key,''), ',',#{teamKey}), #{teamKey})
+          WHERE user_key = #{userKey};
+    </update>
     <update id="updateUser">
         update tb_user
         set
@@ -78,6 +83,11 @@
         user_key = #{userKey}
 
 
+    </update>
+    <update id="removeManagerKey">
+        UPDATE tb_user
+        SET manage_team_key = CASE WHEN manage_team_key IS NULL THEN NULL ELSE REPLACE(manage_team_key, #{teamKey}, '') END
+        WHERE user_key = #{userKey};
     </update>
 
     <select id="searchUser" resultType="com.label.core.pojo.entity.UserAccount">
@@ -127,5 +137,12 @@
         where
         FIND_IN_SET('2',roles) > 0
         and state ='1'
+    </select>
+    <select id="getAllUserByTeamKey" resultType="com.label.core.pojo.vo.admin.UserItem">
+        select
+        *
+        from
+        tb_user
+        where FIND_IN_SET(#{teamKey},belong_team_key) > 0
     </select>
 </mapper>

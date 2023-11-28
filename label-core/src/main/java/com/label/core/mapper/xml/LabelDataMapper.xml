@@ -74,5 +74,12 @@
             model_key = (SELECT model_key FROM tb_mission WHERE `key` = #{missionKey})
 
     </select>
+    <select id="getAudioByMissionKey" resultType="com.label.core.pojo.vo.Label.AudioDataItem">
+        select *
+        from
+        tb_label_data
+        where
+        mission_key = #{missionKey}
+    </select>
 
 </mapper>

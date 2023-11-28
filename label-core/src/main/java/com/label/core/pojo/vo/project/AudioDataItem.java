@@ -7,7 +7,7 @@ public class AudioDataItem {
 
     private String path;
 
-    private String model_key;
+    private String modelKey;
 
     private String audioName;
 

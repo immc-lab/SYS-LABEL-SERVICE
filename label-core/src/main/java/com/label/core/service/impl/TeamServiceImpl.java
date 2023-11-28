@@ -7,6 +7,7 @@ import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
 import com.label.core.service.TeamService;
+import com.label.core.service.UserInfoService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Autowired
     private TeamMapper teamMapper;
-
+    @Autowired
+    private UserInfoService userInfoService;
 
     @Override
     public List<TeamItem> getAllTeam() {
@@ -32,9 +34,19 @@ public class TeamServiceImpl implements TeamService {
         String managerKey = String.join(",",req.getManagerKey());
         if("insert".equals(req.getType())){
             //团队名称查
-            teamMapper.saveOrUpDateTeam(managerKey,managerName,req, SnowflakeIdUtil.getId(), GetLocalDataTime.getTime());
+            String teamKey = SnowflakeIdUtil.getId();
+            teamMapper.saveOrUpDateTeam(managerKey,managerName,req,teamKey, GetLocalDataTime.getTime());
+            for(String userKey:req.getIncreased()){
+                userInfoService.addManagerKey(userKey,teamKey);
+            }
         }else {
             teamMapper.updateTeam(managerKey,managerName,req);
+            for(String userKey:req.getIncreased()){
+                userInfoService.addManagerKey(userKey,req.getTeamKey());
+            }
+            for(String userKey:req.getDecrease()){
+                userInfoService.removeManagerKey(userKey,req.getTeamKey()+",");
+            }
         }
     }
 

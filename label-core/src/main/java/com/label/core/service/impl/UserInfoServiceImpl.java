@@ -88,4 +88,20 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfo.getAllManager();
 
     }
+
+    @Override
+    public void addManagerKey(String userKey, String teamKey) {
+        userInfo.addManagerKey(userKey,teamKey);
+    }
+
+    @Override
+    public void removeManagerKey(String userKey, String teamKey) {
+        userInfo.removeManagerKey(userKey,teamKey);
+    }
+
+    @Override
+    public List<UserItem> getAllUserByTeamKey(String teamKey) {
+       return userInfo.getAllUserByTeamKey(teamKey);
+
+    }
 }

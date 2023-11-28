@@ -10,10 +10,10 @@
         (#{req.name},#{req.startTime},#{req.endTime},#{req.projectArea},#{req.projectType},#{key})
 
     </insert>
-    <insert id="saveAudioDataBykey">
+    <insert id="saveAudioDataByKey">
         insert into
         tb_label_data
-        (format,url,model_key,key,mission_key,project_key,audioName)
+        (format,url,model_key,audio_key,mission_key,project_key,audioName)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.format},#{item.path},#{item.modelKey},#{item.key},#{item.missionKey},#{item.projectKey},#{item.audioName})

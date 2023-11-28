@@ -3,10 +3,7 @@ package com.label.core.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.label.core.pojo.entity.UserAccount;
-import com.label.core.pojo.vo.Label.GetSaveEditDataItem;
-import com.label.core.pojo.vo.Label.LabelDataItem;
-import com.label.core.pojo.vo.Label.XmlDataItem;
-import com.label.core.pojo.vo.Label.commitItem;
+import com.label.core.pojo.vo.Label.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +29,5 @@ public interface LabelDataMapper extends BaseMapper<LabelDataItem> {
 
       String getModelByMissionKey(@Param("missionKey") String missionKey);
 
+    List<AudioDataItem> getAudioByMissionKey(@Param("missionKey") String missionKey);
 }

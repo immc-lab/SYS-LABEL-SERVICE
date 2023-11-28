@@ -6,6 +6,7 @@ import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.pojo.vo.model.SaveModelDataReq;
 import com.label.core.pojo.vo.project.*;
 import com.label.core.service.ProjectService;
+import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -89,7 +90,8 @@ public class Project {
         try {
             String path = folderName + key + "." + req.getFormat();
             String name = key + "." + req.getFormat();
-            byte[] mp3Data = decoder.decodeBuffer(req.getAudioBase64());
+            String base64DataWithoutPrefix = req.getAudioBase64().substring(req.getAudioBase64().indexOf(",") + 1);
+            byte[] mp3Data = decoder.decodeBuffer(base64DataWithoutPrefix);
             fos = new FileOutputStream(path);
             fos.write(mp3Data);
             fos.close();
@@ -99,9 +101,17 @@ public class Project {
             item.setProjectKey(req.getProjectKey());
             item.setFormat(req.getFormat());
             item.setMissionKey(req.getMissionKey());
-            item.setModel_key(req.getModelKey());
-            int succeedCount = (int)request.getSession().getAttribute("succeedCount");
-            List<AudioDataItem> audioList = (List<AudioDataItem>) request.getSession().getAttribute("audioList");
+            item.setModelKey(req.getModelKey());
+            item.setKey(key);
+            int succeedCount = 0;
+            List<AudioDataItem> audioList = null;
+            if(request.getSession().getAttribute("succeedCount") !=null){
+                 succeedCount = (int)request.getSession().getAttribute("succeedCount");
+            }
+
+            if(request.getSession().getAttribute("audioList")!=null){
+                audioList = (List<AudioDataItem>) request.getSession().getAttribute("audioList");
+            }
             if (audioList != null) {
                 audioList.add(item);
                 request.getSession().setAttribute("audioList", audioList);
@@ -113,17 +123,17 @@ public class Project {
                 request.getSession().setAttribute("succeedCount", 1);
             }
 
-            if ("1".equals(req.getLast())) {
-                //保存数据，并更新任务和项目总条数
-                long count = 0L;
-                if (audioList != null) {
-                    count = (long) audioList.size();
-                }
-                projectService.saveAudioDataByKey(audioList);
-                projectService.updateProjectCount(count, req.getProjectKey());
-                projectService.updateMissionCount(count, req.getProjectKey());
+//            if ("1".equals(req.getLast())) {
+//                //保存数据，并更新任务和项目总条数
+//                long count = 0L;
+//                if (audioList != null) {
+//                    count = (long) audioList.size();
+//                }
+                projectService.saveAudioDataByKey((List<AudioDataItem>)(request.getSession().getAttribute("audioList")));
+//                projectService.updateProjectCount(count, req.getProjectKey());
+//                projectService.updateMissionCount(count, req.getProjectKey());
                 return R.ok().data(request.getSession().getAttribute("succeedCount"));
-            }
+//            }
 
         } catch (IOException ignored) {
         } catch (Exception e) {

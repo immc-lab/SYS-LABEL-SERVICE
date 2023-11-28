@@ -27,7 +27,7 @@ import java.util.List;
 public class Label {
     @Resource
     private LabelDataService labelDataService;
-    //    用户注册
+    //
     @PostMapping("/core/getMusicLabelList")
     public R getMusicLabelList(@RequestBody GetMusicLabelListReq req, HttpServletRequest request) {
         GetMusicLabelListRes res = new GetMusicLabelListRes();
@@ -137,5 +137,19 @@ public class Label {
             return R.error();
         }
         return R.ok().data(res);
+    }
+
+    @PostMapping("/core/getAudioByMissionKey")
+    public R getAudioByMissionKey(@RequestBody GetAudioByMissionKeyReq req){
+        System.out.println(req);
+        List<AudioDataItem> audioDataItem = new ArrayList<>();
+        try {
+            audioDataItem = labelDataService.getAudioByMissionKey(req.getMissionKey());
+        } catch (Exception e) {
+            log.error("查询任务所属音频失败！");
+            log.error(e);
+            return R.error();
+        }
+        return R.ok().data(audioDataItem);
     }
 }

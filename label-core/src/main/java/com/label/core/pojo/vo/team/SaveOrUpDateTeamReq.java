@@ -2,6 +2,7 @@ package com.label.core.pojo.vo.team;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -19,5 +20,9 @@ public class SaveOrUpDateTeamReq {
     private String type;
 
     private List<String> managerKey;
+    //增加的管理员key
+    private List<String> increased = new ArrayList<>();
+    //减少了管理员key
+    private List<String> decrease = new ArrayList<>();
 
 }

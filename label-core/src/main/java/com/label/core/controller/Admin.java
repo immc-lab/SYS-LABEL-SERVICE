@@ -5,6 +5,7 @@ import com.label.common.result.R;
 import com.label.common.result.ResponseEnum;
 import com.label.common.util.Sha256;
 import com.label.core.pojo.entity.CurrentUserMessage;
+import com.label.core.pojo.vo.Label.GetAllUserByTeamKeyReq;
 import com.label.core.pojo.vo.admin.*;
 import com.label.core.service.UserInfoService;
 import com.mysql.cj.util.StringUtils;
@@ -127,4 +128,17 @@ public class Admin {
         }
         return R.ok().data(managerList);
     }
+
+    @PostMapping("/core/getAllUserByTeamKey")
+    public R getAllUserByTeamKey(@RequestBody GetAllUserByTeamKeyReq req) {
+        List<UserItem> userList = new ArrayList<>();
+        try{
+            userList = userInfoService.getAllUserByTeamKey(req.getTeamKey());
+        }catch (Exception e){
+            return R.error().message("系统忙！请稍候重试！");
+        }
+        return R.ok().data(userList);
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.label.core.service;
 
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.vo.admin.*;
+import org.apache.ibatis.annotations.Param;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,5 +25,11 @@ public interface UserInfoService {
     void disableAccountByKey(String userKey,String state);
 
     List<ManagerItem> getAllManager();
+
+    void addManagerKey(String userKey,String teamKey);
+
+    void removeManagerKey(String userKey, String teamKey);
+
+    List<UserItem> getAllUserByTeamKey(String teamKey);
 }
 

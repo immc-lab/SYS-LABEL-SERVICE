@@ -37,7 +37,7 @@ public class SaveProjectServiceImpl implements ProjectService {
 
     @Override
     public void saveAudioDataByKey(List<AudioDataItem> item) {
-        projectMapper.saveAudioDataBykey(item);
+        projectMapper.saveAudioDataByKey(item);
     }
 
     @Override

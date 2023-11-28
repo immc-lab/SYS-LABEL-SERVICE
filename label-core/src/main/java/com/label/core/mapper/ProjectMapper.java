@@ -22,7 +22,7 @@ public interface ProjectMapper extends BaseMapper<SaveProjectReq> {
 
     Long saveNewMission(@Param("req") SaveNewMissionReq req, @Param("key") String key,@Param("createTime")String createTime);
 
-    Long saveAudioDataBykey(List<AudioDataItem> item);
+    Long saveAudioDataByKey(List<AudioDataItem> item);
 
     Long updateProjectTotal(@Param("count") long count,@Param("key") String key);
 
