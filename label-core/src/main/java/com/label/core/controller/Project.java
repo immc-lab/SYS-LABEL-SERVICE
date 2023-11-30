@@ -123,17 +123,10 @@ public class Project {
                 request.getSession().setAttribute("succeedCount", 1);
             }
 
-//            if ("1".equals(req.getLast())) {
-//                //保存数据，并更新任务和项目总条数
-//                long count = 0L;
-//                if (audioList != null) {
-//                    count = (long) audioList.size();
-//                }
+            if ("1".equals(req.getLast())) {
                 projectService.saveAudioDataByKey((List<AudioDataItem>)(request.getSession().getAttribute("audioList")));
-//                projectService.updateProjectCount(count, req.getProjectKey());
-//                projectService.updateMissionCount(count, req.getProjectKey());
                 return R.ok().data(request.getSession().getAttribute("succeedCount"));
-//            }
+            }
 
         } catch (IOException ignored) {
         } catch (Exception e) {
