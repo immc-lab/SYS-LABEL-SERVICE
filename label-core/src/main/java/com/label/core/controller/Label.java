@@ -132,6 +132,7 @@ public class Label {
             pathList =  labelDataService.exportExcelDataByKey(req);
             File zipFile = createZip(pathList, zipFileName);
               zipData = getBytesFromFile(zipFile);
+              zipFile.delete();
 //            for(FileTransferItem item:pathList){
 //                ExportExcelDataRes resItem = new ExportExcelDataRes();
 //                resItem.setFileBase64(FileTransfer.fileToBase64(item.getPath()));
@@ -179,7 +180,7 @@ public class Label {
                 }
             }
         }
-
+        //删除临时压缩包
         return zipFile;
     }
 
