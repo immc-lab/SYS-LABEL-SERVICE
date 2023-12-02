@@ -98,7 +98,7 @@ public class LabelDataServiceImpl extends ServiceImpl<LabelDataMapper, LabelData
         //测试数据
         List<FileTransferItem> pathList = new ArrayList<>();
         if (!StringUtils.isNullOrEmpty(req.getMissionKey())) {
-            String missionName = projectService.getMissionByKey(req.getMissionKey()).getMissionName();
+            String missionName = projectService.getMissionByKey(req.getMissionKey(),null).getMissionName();
             pathList.add(exportExcelDataByMissionKey(req.getMissionKey(), missionName));
         } else if (!StringUtils.isNullOrEmpty(req.getProjectKey())) {
             //获取项目下所有任务key

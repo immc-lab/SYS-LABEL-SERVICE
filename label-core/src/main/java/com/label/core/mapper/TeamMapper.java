@@ -27,4 +27,6 @@ public interface TeamMapper extends BaseMapper<TeamItem> {
     void updateTeam(@Param("managerKey") String managerKey,@Param("managerName")String managerName,@Param("req") SaveOrUpDateTeamReq req);
 
     List<ManagerItem> getManagerByTeamKey(@Param("teamKey") String teamKey);
+
+    List<TeamItem> getTeamByKey(@Param("teamKey") String teamKey);
 }

@@ -40,5 +40,5 @@ public interface ProjectMapper extends BaseMapper<SaveProjectReq> {
 
     void updateProjectByKey(@Param("req") SaveProjectReq req);
 
-    List<MissionList> getMissionByKey(@Param("key") String key);
+    List<MissionList> getMissionByKey(@Param("key") String key,@Param("teamKey")String teamKey);
 }

@@ -60,4 +60,10 @@ public class TeamServiceImpl implements TeamService {
        return teamMapper.getManagerByTeamKey(teamKey);
 
     }
+
+    @Override
+    public TeamItem getTeamByKey(String teamKey) {
+       return teamMapper.getTeamByKey(teamKey).get(0);
+
+    }
 }

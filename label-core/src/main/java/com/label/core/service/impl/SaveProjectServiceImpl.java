@@ -91,8 +91,8 @@ public class SaveProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public MissionList getMissionByKey(String key) {
-        List<MissionList> missionList = projectMapper.getMissionByKey(key);
+    public MissionList getMissionByKey(String key,String teamKey) {
+        List<MissionList> missionList = projectMapper.getMissionByKey(key,teamKey);
         return missionList.get(0);
     }
 }

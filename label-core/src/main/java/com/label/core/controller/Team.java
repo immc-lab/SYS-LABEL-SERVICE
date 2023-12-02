@@ -7,6 +7,7 @@ import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.project.SaveProjectReq;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
+import com.label.core.pojo.vo.team.getTeamByKeyReq;
 import com.label.core.service.TeamService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +71,19 @@ public class Team {
             return R.error();
         }
         return R.ok();
+    }
+
+
+    @PostMapping("/core/getTeamByKey")
+    public R getTeamByKey(@RequestBody getTeamByKeyReq req) {
+        TeamItem item;
+        try {
+             item =  teamService.getTeamByKey(req.getTeamKey());
+        } catch (Exception e) {
+            log.error("获取团队信息失败！",e);
+            return R.error();
+        }
+        return R.ok().data(item);
     }
 
 }

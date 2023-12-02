@@ -17,9 +17,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @Log4j2
@@ -120,23 +123,26 @@ public class Label {
     //批量导出数据
     @PostMapping("/core/exportExcelData")
     public R exportExcelData(@RequestBody ExportExcelDataReq req) {
-        List<ExportExcelDataRes> res = new ArrayList<>();
         List<FileTransferItem> pathList =  new ArrayList<>();
+        byte[] zipData;
         System.out.println(req);
         try {
             //待下载服务器地址列表
+            String zipFileName = "压缩包.zip";
             pathList =  labelDataService.exportExcelDataByKey(req);
-            for(FileTransferItem item:pathList){
-                ExportExcelDataRes resItem = new ExportExcelDataRes();
-                resItem.setFileBase64(FileTransfer.fileToBase64(item.getPath()));
-                resItem.setFileName(item.getFileName());
-                res.add(resItem);
-            }
+            File zipFile = createZip(pathList, zipFileName);
+              zipData = getBytesFromFile(zipFile);
+//            for(FileTransferItem item:pathList){
+//                ExportExcelDataRes resItem = new ExportExcelDataRes();
+//                resItem.setFileBase64(FileTransfer.fileToBase64(item.getPath()));
+//                resItem.setFileName(item.getFileName());
+//                res.add(resItem);
+//            }
         } catch (Exception e) {
             log.error("导出Excel失败！",e);
             return R.error();
         }
-        return R.ok().data(res);
+        return R.ok().data(zipData);
     }
 
     @PostMapping("/core/getAudioByMissionKey")
@@ -151,5 +157,37 @@ public class Label {
             return R.error();
         }
         return R.ok().data(audioDataItem);
+    }
+
+
+    private File createZip(List<FileTransferItem> fileUrls, String zipFileName) throws IOException {
+        File zipFile = new File(zipFileName);
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile))) {
+            for (FileTransferItem fileUrl : fileUrls) {
+                File file = new File(fileUrl.getPath());
+                if (!file.exists()) {
+                    continue; // 如果文件不存在，则跳过
+                }
+
+                try (FileInputStream fileIn = new FileInputStream(file)) {
+                    zipOut.putNextEntry(new ZipEntry(file.getName()));
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = fileIn.read(buffer)) > 0) {
+                        zipOut.write(buffer, 0, length);
+                    }
+                }
+            }
+        }
+
+        return zipFile;
+    }
+
+    private byte[] getBytesFromFile(File file) throws IOException {
+        byte[] buffer = new byte[(int) file.length()];
+        try (FileInputStream fis = new FileInputStream(file)) {
+            fis.read(buffer);
+        }
+        return buffer;
     }
 }

@@ -108,9 +108,10 @@
          select *
          from
          tb_mission
-         where
-         `key` = #{key}
-
-
+         where 1=1
+         and
+         (#{key} IS NULL OR `key` = #{key} )
+         and
+         (#{teamKey} IS NULL OR team_key = #{teamKey})
     </select>
 </mapper>

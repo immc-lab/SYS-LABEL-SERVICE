@@ -38,16 +38,16 @@ public class Project {
     public R saveProjectData(@RequestBody SaveProjectReq req) {
         //生成key
         try {
-            if("insert".equals(req.getType())){
+            if ("insert".equals(req.getType())) {
                 int count = projectService.checkNameReapet(req.getName());
                 if (count >= 1) {
                     return R.setResult(ResponseEnum.ACCOUNT_REPEAT);
-                }else {
+                } else {
                     String key = SnowflakeIdUtil.getId();
                     projectService.saveProject(req, key);
                 }
 
-            }else {
+            } else {
                 projectService.updateProject(req);
             }
 
@@ -85,7 +85,6 @@ public class Project {
             if (!folder.mkdir()) {
                 return R.error();
             }
-            ;
         }
         try {
             String path = folderName + key + "." + req.getFormat();
@@ -105,11 +104,11 @@ public class Project {
             item.setKey(key);
             int succeedCount = 0;
             List<AudioDataItem> audioList = null;
-            if(request.getSession().getAttribute("succeedCount") !=null){
-                 succeedCount = (int)request.getSession().getAttribute("succeedCount");
+            if (request.getSession().getAttribute("succeedCount") != null) {
+                succeedCount = (int) request.getSession().getAttribute("succeedCount");
             }
 
-            if(request.getSession().getAttribute("audioList")!=null){
+            if (request.getSession().getAttribute("audioList") != null) {
                 audioList = (List<AudioDataItem>) request.getSession().getAttribute("audioList");
             }
             if (audioList != null) {
@@ -124,7 +123,7 @@ public class Project {
             }
 
             if ("1".equals(req.getLast())) {
-                projectService.saveAudioDataByKey((List<AudioDataItem>)(request.getSession().getAttribute("audioList")));
+                projectService.saveAudioDataByKey((List<AudioDataItem>) (request.getSession().getAttribute("audioList")));
                 return R.ok().data(request.getSession().getAttribute("succeedCount"));
             }
 
@@ -148,7 +147,7 @@ public class Project {
         if (count >= 1) {
             return R.setResult(ResponseEnum.ACCOUNT_REPEAT);
         } else {
-             key = SnowflakeIdUtil.getId();
+            key = SnowflakeIdUtil.getId();
             projectService.saveNewMission(req, key);
         }
         return R.ok().data(key);
@@ -157,9 +156,9 @@ public class Project {
 
     @PostMapping("/core/deleteMissionByKey")
     public R deleteMissionByKey(DeleteMissionByKeyReq req) {
-        try{
+        try {
             projectService.deleteMissionByKey(req.getMissionKey());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("删除任务失败！");
             return R.error();
         }
@@ -181,10 +180,10 @@ public class Project {
     }
 
     @PostMapping("/core/getMissionByKey")
-    public R getMissionByKey(@RequestBody GetMissionByKey req) {
+    public R getMissionByKey(@RequestBody GetMissionByKeyReq req) {
         MissionList mission = new MissionList();
         try {
-             mission = projectService.getMissionByKey(req.getKey());
+            mission = projectService.getMissionByKey(req.getKey(),req.getTeamKey());
         } catch (Exception e) {
             log.error("获取任务失败失败！");
             log.error(e);
@@ -193,4 +192,3 @@ public class Project {
         return R.ok().data(mission);
     }
 }
-

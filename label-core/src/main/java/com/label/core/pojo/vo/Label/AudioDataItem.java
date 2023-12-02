@@ -22,6 +22,8 @@ public class AudioDataItem {
     private String modelKey;
     //音频地址
     private String url;
+    // 质检人
+    private String belongCheckerName;
 
 
 }

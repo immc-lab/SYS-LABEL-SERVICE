@@ -16,4 +16,6 @@ public interface TeamService {
     Long checkNameRepeat(String teamName);
 
     List<ManagerItem> getManagerByTeamKey(String teamKey);
+
+    TeamItem getTeamByKey(String teamKey);
 }

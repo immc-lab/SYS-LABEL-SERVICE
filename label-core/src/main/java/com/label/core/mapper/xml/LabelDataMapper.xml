@@ -38,7 +38,7 @@
             `url`
         from
             tb_label_data
-        where id = #{key}
+        where audio_key = #{key}
     </select>
     <select id="getSaveEditData" resultType="string">
         select data_json
@@ -61,7 +61,7 @@
             l.url AS path
         FROM
             tb_savedata AS s
-                JOIN tb_label_data AS l ON s.audio_key = l.`key`
+                JOIN tb_label_data AS l ON s.audio_key = l.audio_key
         WHERE
             l.mission_key = #{missionKey};
     </select>
