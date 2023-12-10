@@ -145,4 +145,10 @@
         tb_user
         where FIND_IN_SET(#{teamKey},belong_team_key) > 0
     </select>
+    <select id="getUserNameByKey" resultType="java.lang.String">
+        select `name`
+        from
+        tb_user
+        where user_key = #{userKey}
+    </select>
 </mapper>

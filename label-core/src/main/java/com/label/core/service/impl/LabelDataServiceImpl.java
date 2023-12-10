@@ -116,6 +116,11 @@ public class LabelDataServiceImpl extends ServiceImpl<LabelDataMapper, LabelData
         return labelDataMapper.getAudioByMissionKey(missionKey);
     }
 
+    @Override
+    public int getAudioCountByMissionKey(String missionKey) {
+        return labelDataMapper.getAudioCountByMissionKey(missionKey);
+    }
+
     // 单个任务导出，返回Excel存储地址
     private FileTransferItem exportExcelDataByMissionKey(String missionKey, String missionName) throws IOException, InterruptedException {
         FileTransferItem fileTransferItem = new FileTransferItem();

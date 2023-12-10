@@ -29,4 +29,11 @@ public interface TeamMapper extends BaseMapper<TeamItem> {
     List<ManagerItem> getManagerByTeamKey(@Param("teamKey") String teamKey);
 
     List<TeamItem> getTeamByKey(@Param("teamKey") String teamKey);
+
+    void allocationLabeler(@Param("userKey") String userKey,@Param("count") int count,@Param("userName")String userName);
+
+    void allocationChecker(@Param("userKey") String userKey,@Param("count") int count,@Param("userName")String userName);
+
+    List<String> getTeamNameByKey(@Param("teamKey") String teamKey);
+
 }

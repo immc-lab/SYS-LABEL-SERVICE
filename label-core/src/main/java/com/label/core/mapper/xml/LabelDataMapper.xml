@@ -10,34 +10,33 @@
 
     </insert>
     <update id="upData">
-        update tb_label_data set translation_ch = #{text},state = "2"  where id = #{key}
+        update tb_label_data
+        set translation_ch = #{text},
+            state          = "2"
+        where id = #{key}
     </update>
     <update id="saveLabelData">
         <![CDATA[
-        delete from
-            tb_savedata
-        where
-            `audio_key` = #{key};
+        delete
+        from tb_savedata
+        where `audio_key` = #{key};
 
-        insert into
-            tb_savedata
-        (data_json,audio_key)
-        values
-            (#{json},#{key})
+        insert into tb_savedata
+            (data_json, audio_key)
+        values (#{json}, #{key})
         ]]>
 
     </update>
     <delete id="remove">
-        DELETE FROM tb_label_detail
+        DELETE
+        FROM tb_label_detail
         WHERE audio_id = #{key};
     </delete>
 
 
     <select id="getLabelAudioDataByKey" resultType="String">
-        select
-            `url`
-        from
-            tb_label_data
+        select `url`
+        from tb_label_data
         where audio_key = #{key}
     </select>
     <select id="getSaveEditData" resultType="string">
@@ -46,40 +45,35 @@
         where audio_key = #{key}
     </select>
     <select id="getLabelJsonDataByProjectKey" resultType="com.label.core.pojo.vo.Label.XmlDataItem">
-        SELECT
-            s.data_json,
-            l.url AS path
-        FROM
-            tb_savedata AS s
-                JOIN tb_label_data AS l ON s.audio_key = l.`key`
-        WHERE
-            l.project_key = #{projectKey};
+        SELECT s.data_json,
+               l.url AS path
+        FROM tb_savedata AS s
+                 JOIN tb_label_data AS l ON s.audio_key = l.`key`
+        WHERE l.project_key = #{projectKey};
     </select>
     <select id="getLabelJsonDataByMissionKey" resultType="com.label.core.pojo.vo.Label.XmlDataItem">
-        SELECT
-            s.data_json,
-            l.url AS path
-        FROM
-            tb_savedata AS s
-                JOIN tb_label_data AS l ON s.audio_key = l.audio_key
-        WHERE
-            l.mission_key = #{missionKey};
+        SELECT s.data_json,
+               l.url AS path
+        FROM tb_savedata AS s
+                 JOIN tb_label_data AS l ON s.audio_key = l.audio_key
+        WHERE l.mission_key = #{missionKey};
     </select>
     <select id="getModelByMissionKey" resultType="java.lang.String">
-        SELECT
-            json
-        FROM
-            tb_model
-        WHERE
-            model_key = (SELECT model_key FROM tb_mission WHERE `key` = #{missionKey})
+        SELECT json
+        FROM tb_model
+        WHERE model_key = (SELECT model_key FROM tb_mission WHERE `key` = #{missionKey})
 
     </select>
     <select id="getAudioByMissionKey" resultType="com.label.core.pojo.vo.Label.AudioDataItem">
         select *
-        from
-        tb_label_data
-        where
-        mission_key = #{missionKey}
+        from tb_label_data
+        where mission_key = #{missionKey}
+    </select>
+    <select id="getAudioCountByMissionKey" resultType="java.lang.Integer">
+        select count(*)
+        from tb_label_data
+        where missionKey = #{missionKey}
+          AND allocation = "0"
     </select>
 
 </mapper>

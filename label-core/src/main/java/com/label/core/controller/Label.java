@@ -160,7 +160,6 @@ public class Label {
         return R.ok().data(audioDataItem);
     }
 
-
     private File createZip(List<FileTransferItem> fileUrls, String zipFileName) throws IOException {
         File zipFile = new File(zipFileName);
         try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile))) {

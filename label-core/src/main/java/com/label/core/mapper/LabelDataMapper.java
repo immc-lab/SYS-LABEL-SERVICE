@@ -29,5 +29,7 @@ public interface LabelDataMapper extends BaseMapper<LabelDataItem> {
 
       String getModelByMissionKey(@Param("missionKey") String missionKey);
 
-    List<AudioDataItem> getAudioByMissionKey(@Param("missionKey") String missionKey);
+      List<AudioDataItem> getAudioByMissionKey(@Param("missionKey") String missionKey);
+
+      int getAudioCountByMissionKey(@Param("missionKey") String missionKey);
 }

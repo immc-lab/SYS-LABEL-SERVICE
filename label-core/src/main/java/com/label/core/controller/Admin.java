@@ -5,8 +5,10 @@ import com.label.common.result.R;
 import com.label.common.result.ResponseEnum;
 import com.label.common.util.Sha256;
 import com.label.core.pojo.entity.CurrentUserMessage;
+import com.label.core.pojo.entity.ManagerTeamItem;
 import com.label.core.pojo.vo.Label.GetAllUserByTeamKeyReq;
 import com.label.core.pojo.vo.admin.*;
+import com.label.core.service.TeamService;
 import com.label.core.service.UserInfoService;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -28,6 +32,8 @@ import java.util.List;
 public class Admin {
     @Resource
     private UserInfoService userInfoService;
+    @Resource
+    private TeamService teamService;
 
     //    用户注册
     @PostMapping("/core/register")
@@ -65,12 +71,34 @@ public class Admin {
     //获取当前用户信息
     @PostMapping("/core/getAdminMessage")
     public R getCurrentUserMessage(HttpServletRequest request) {
-        CurrentUserMessage userMessage = userInfoService.getCurrentUserMessage(request);
-        if (userMessage != null) {
-            return R.ok().data(userMessage);
-        } else {
-            return R.error();
+        List<ManagerTeamItem> list = new ArrayList<>();
+        List<ManagerTeamItem> belongTeam = new ArrayList<>();
+        CurrentUserMessage userMessage = new CurrentUserMessage();
+        try {
+             userMessage= userInfoService.getCurrentUserMessage(request);
+             userMessage.setCurrentRole(Collections.max(Arrays.asList(userMessage.getRoles().split(","))));
+             if(!StringUtils.isNullOrEmpty(userMessage.getManageTeamKey())) {
+                 for (String item : userMessage.getManageTeamKey().split(",")) {
+                     ManagerTeamItem managerTeamItem = new ManagerTeamItem();
+                     managerTeamItem.setTeamKey(item);
+                     managerTeamItem.setTeamName(teamService.getTeamNameByKey(item));
+                     list.add(managerTeamItem);
+                 }
+
+                 for (String item : userMessage.getBelongTeamKey().split(",")) {
+                     ManagerTeamItem managerTeamItem = new ManagerTeamItem();
+                     managerTeamItem.setTeamKey(item);
+                     managerTeamItem.setTeamName(teamService.getTeamNameByKey(item));
+                     belongTeam.add(managerTeamItem);
+                 }
+             }
+            userMessage.setManagerTeamItems(list);
+            userMessage.setBelongTeamItems(belongTeam);
+        }catch (Exception e){
+            log.error("获取当前用户信息失败！",e);
+            return R.error().data("获取用户信息失败！");
         }
+        return R.ok().data(userMessage);
     }
 
 //新建或者更新用户

@@ -71,4 +71,6 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     void removeManagerKey(@Param("userKey") String userKey,@Param("teamKey") String teamKey);
 
     List<UserItem> getAllUserByTeamKey(@Param("teamKey") String teamKey);
+
+    List<String> getUserNameByKey(@Param("userKey") String userKey);
 }

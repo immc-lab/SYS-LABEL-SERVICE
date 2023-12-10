@@ -5,6 +5,7 @@ import com.label.common.result.ResponseEnum;
 import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.project.SaveProjectReq;
+import com.label.core.pojo.vo.team.AllocationMissionReq;
 import com.label.core.pojo.vo.team.SaveOrUpDateTeamReq;
 import com.label.core.pojo.vo.team.TeamItem;
 import com.label.core.pojo.vo.team.getTeamByKeyReq;
@@ -84,6 +85,17 @@ public class Team {
             return R.error();
         }
         return R.ok().data(item);
+    }
+//给任务分配团队人员
+    @PostMapping("/core/allocationMission")
+    public R allocationMission(@RequestBody AllocationMissionReq req) {
+        try {
+            teamService.allocationMission(req);
+        } catch (Exception e) {
+            log.error("获取团队信息失败！",e);
+            return R.error();
+        }
+        return R.ok();
     }
 
 }

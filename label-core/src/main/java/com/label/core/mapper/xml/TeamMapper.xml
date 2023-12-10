@@ -19,6 +19,26 @@
         where
         team_key = #{req.teamKey}
     </update>
+    <update id="allocationLabeler">
+        update
+        tb_label_data
+        set
+            belong_user_key = #{userKey},
+            allocation = "1",
+            belong_user_name = #{userName}
+        where allocation = "0"
+            LIMIT #{count}
+    </update>
+    <update id="allocationChecker">
+        update
+        tb_label_data
+        set
+            belong_checker_key = #{userKey},
+            allocation_check = "1",
+            belong_checker_name = #{userName}
+        where allocation_check = "0"
+        LIMIT #{count}
+    </update>
 
 
     <select id="getAllTeam" resultType="com.label.core.pojo.vo.team.TeamItem">
@@ -50,5 +70,13 @@
         where 1=1
         and
         (#{teamKey} IS NULL OR team_key = #{teamKey} )
+    </select>
+    <select id="getTeamNameByKey" resultType="java.lang.String">
+        select
+        team_name
+        from
+        tb_team
+        where
+        team_key = #{teamKey}
     </select>
 </mapper>

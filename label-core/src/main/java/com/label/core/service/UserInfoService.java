@@ -31,5 +31,7 @@ public interface UserInfoService {
     void removeManagerKey(String userKey, String teamKey);
 
     List<UserItem> getAllUserByTeamKey(String teamKey);
+
+    String getUserNameByKey(String userKey);
 }
 

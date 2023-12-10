@@ -104,4 +104,9 @@ public class UserInfoServiceImpl implements UserInfoService {
        return userInfo.getAllUserByTeamKey(teamKey);
 
     }
+
+    @Override
+    public String getUserNameByKey(String userKey) {
+        return userInfo.getUserNameByKey(userKey).get(0);
+    }
 }

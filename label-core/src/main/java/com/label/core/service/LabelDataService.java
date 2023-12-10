@@ -22,4 +22,6 @@ public interface LabelDataService {
     List<FileTransferItem> exportExcelDataByKey(ExportExcelDataReq req) throws IOException, InterruptedException;
 
     List<AudioDataItem> getAudioByMissionKey(String missionKey);
+
+     int getAudioCountByMissionKey(String missionKey);
 }
