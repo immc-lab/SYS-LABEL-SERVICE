@@ -23,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 //      拦截   就是未登录,自动跳转到登录页面，然后写拦截住的逻辑
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "请重新登录！");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "登录已过期请重新登录！");
         return false;
     }
 

@@ -1,6 +1,7 @@
 package com.label.core.service;
 
 import com.label.core.pojo.entity.CurrentUserMessage;
+import com.label.core.pojo.vo.Label.UpdateRolesMessage;
 import com.label.core.pojo.vo.admin.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,5 +34,7 @@ public interface UserInfoService {
     List<UserItem> getAllUserByTeamKey(String teamKey);
 
     String getUserNameByKey(String userKey);
+
+    void updateRolesMessage(UpdateRolesMessage req,String userKey);
 }
 

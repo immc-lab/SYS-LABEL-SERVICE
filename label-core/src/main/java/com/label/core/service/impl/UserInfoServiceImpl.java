@@ -5,6 +5,7 @@ import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.mapper.UserAccountMapper;
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.entity.UserAccount;
+import com.label.core.pojo.vo.Label.UpdateRolesMessage;
 import com.label.core.pojo.vo.admin.*;
 import com.label.core.service.UserInfoService;
 import org.springframework.stereotype.Service;
@@ -108,5 +109,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public String getUserNameByKey(String userKey) {
         return userInfo.getUserNameByKey(userKey).get(0);
+    }
+
+    @Override
+    public void updateRolesMessage(UpdateRolesMessage req,String userKey) {
+        userInfo.updateRolesMessage(req,userKey);
     }
 }

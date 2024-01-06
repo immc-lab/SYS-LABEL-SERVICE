@@ -89,6 +89,18 @@
         SET manage_team_key = CASE WHEN manage_team_key IS NULL THEN NULL ELSE REPLACE(manage_team_key, #{teamKey}, '') END
         WHERE user_key = #{userKey};
     </update>
+    <update id="updateRolesMessage">
+        update
+        tb_user
+        set
+        current_role = #{req.currentRole},
+        role_type = #{req.roleType},
+        current_team = #{req.currentTeam}
+        where
+        user_key = #{userKey}
+
+
+    </update>
 
     <select id="searchUser" resultType="com.label.core.pojo.entity.UserAccount">
         select

@@ -3,6 +3,7 @@ package com.label.core.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.entity.UserAccount;
+import com.label.core.pojo.vo.Label.UpdateRolesMessage;
 import com.label.core.pojo.vo.admin.ManagerItem;
 import com.label.core.pojo.vo.admin.SaveNewUserReq;
 import com.label.core.pojo.vo.admin.UserItem;
@@ -73,4 +74,6 @@ public interface UserAccountMapper extends BaseMapper<UserAccount> {
     List<UserItem> getAllUserByTeamKey(@Param("teamKey") String teamKey);
 
     List<String> getUserNameByKey(@Param("userKey") String userKey);
+
+    void updateRolesMessage(@Param("req") UpdateRolesMessage req,@Param("userKey") String userKey);
 }

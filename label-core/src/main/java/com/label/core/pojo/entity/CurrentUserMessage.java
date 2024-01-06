@@ -42,11 +42,12 @@ public class CurrentUserMessage {
     private String name;
     //账号信息
     private String userAccount;
-    //默认当前角色群权限最大的角色
+    //用户当前选择的角色
     private String currentRole;
     //团队key对应便于切换角色团队
     private List<ManagerTeamItem>  managerTeamItems;
     // 属于哪个团队
     private  List<ManagerTeamItem> belongTeamItems;
-
+    //用户当前选择角色所在下拉框模块
+    private String roleType;
 }

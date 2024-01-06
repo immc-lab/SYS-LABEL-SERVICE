@@ -7,6 +7,7 @@ import com.label.common.util.Sha256;
 import com.label.core.pojo.entity.CurrentUserMessage;
 import com.label.core.pojo.entity.ManagerTeamItem;
 import com.label.core.pojo.vo.Label.GetAllUserByTeamKeyReq;
+import com.label.core.pojo.vo.Label.UpdateRolesMessage;
 import com.label.core.pojo.vo.admin.*;
 import com.label.core.service.TeamService;
 import com.label.core.service.UserInfoService;
@@ -53,6 +54,7 @@ public class Admin {
     //    用户登录
     @PostMapping("/core/login")
     public R login(@RequestBody LoginReq loginReq, HttpServletRequest request) throws NoSuchAlgorithmException {
+
         String userKey = userInfoService.login(loginReq.getAccount(),Sha256.cryBySh256(loginReq.getPassword()),request);
         if (!StringUtils.isNullOrEmpty(userKey)) {
             if("409".equals(userKey)){
@@ -62,6 +64,9 @@ public class Admin {
             HttpSession session = request.getSession();
             //拦截器检查 存储用户id
             session.setAttribute("loginUser", userKey);
+            //判断是否登录过，若登录过则最后一个登录的有效
+            UserSessionManager.loginNewUser(session,userKey);
+
             return R.setResult(ResponseEnum.SUCCESS);
         } else {
             return R.setResult(ResponseEnum.LOGIN_PASSWORD_ERROR);
@@ -76,7 +81,7 @@ public class Admin {
         CurrentUserMessage userMessage = new CurrentUserMessage();
         try {
              userMessage= userInfoService.getCurrentUserMessage(request);
-             userMessage.setCurrentRole(Collections.max(Arrays.asList(userMessage.getRoles().split(","))));
+//             userMessage.setCurrentRole(Collections.max(Arrays.asList(userMessage.getRoles().split(","))));
              if(!StringUtils.isNullOrEmpty(userMessage.getManageTeamKey())) {
                  for (String item : userMessage.getManageTeamKey().split(",")) {
                      ManagerTeamItem managerTeamItem = new ManagerTeamItem();
@@ -162,6 +167,18 @@ public class Admin {
         List<UserItem> userList = new ArrayList<>();
         try{
             userList = userInfoService.getAllUserByTeamKey(req.getTeamKey());
+        }catch (Exception e){
+            return R.error().message("系统忙！请稍候重试！");
+        }
+        return R.ok().data(userList);
+    }
+
+
+    @PostMapping("/core/updateRolesMessage")
+    public R updateRolesMessage(@RequestBody UpdateRolesMessage req,HttpServletRequest request) {
+        List<UserItem> userList = new ArrayList<>();
+        try{
+            userInfoService.updateRolesMessage(req,(String)request.getSession().getAttribute("loginUser"));
         }catch (Exception e){
             return R.error().message("系统忙！请稍候重试！");
         }
