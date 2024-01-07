@@ -121,6 +121,18 @@ public class LabelDataServiceImpl extends ServiceImpl<LabelDataMapper, LabelData
         return labelDataMapper.getAudioCountByMissionKey(missionKey);
     }
 
+    @Override
+    public List<com.label.core.pojo.vo.project.AudioDataItem> getLabelByUserKeyAndMissionKeyAndType(String userKey, String type, String missionKey) {
+        List<com.label.core.pojo.vo.project.AudioDataItem> list = new ArrayList<>();
+        if("0".equals(type)){
+            list = labelDataMapper.getDoLabelByUserKeyAndMissionKeyAndType(userKey,missionKey);
+        }else {
+            list = labelDataMapper.getCheckLabelByUserKeyAndMissionKeyAndType(userKey,missionKey);
+        }
+
+        return list;
+    }
+
     // 单个任务导出，返回Excel存储地址
     private FileTransferItem exportExcelDataByMissionKey(String missionKey, String missionName) throws IOException, InterruptedException {
         FileTransferItem fileTransferItem = new FileTransferItem();

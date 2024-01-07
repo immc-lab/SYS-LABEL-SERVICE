@@ -16,7 +16,9 @@ public class UserSessionManager {
             // 如果已经存在，则挤掉之前登录的用户
         if(loggedInUsers.containsKey(userKey)) {
             HttpSession previousSession = loggedInUsers.get(userKey);
-            previousSession.invalidate();
+            if(previousSession != null&& !previousSession.isNew()){
+                previousSession.invalidate();
+            }
             loggedInUsers.remove(userKey);
         }
         loggedInUsers.put(userKey, session);

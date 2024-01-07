@@ -5,6 +5,7 @@ import com.label.common.result.ResponseEnum;
 import com.label.common.util.SnowflakeIdUtil;
 import com.label.core.pojo.vo.model.SaveModelDataReq;
 import com.label.core.pojo.vo.project.*;
+import com.label.core.service.LabelDataService;
 import com.label.core.service.ProjectService;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.log4j.Log4j2;
@@ -32,6 +33,9 @@ import java.util.List;
 public class Project {
     @Resource
     private ProjectService projectService;
+
+    @Resource
+    private LabelDataService labelDataService;
 
     //新建项目或者更新项目
     @PostMapping("/core/saveProjectData")
@@ -178,7 +182,7 @@ public class Project {
         }
         return R.ok().data(list);
     }
-
+   // 获取团队key或者任务key
     @PostMapping("/core/getMissionByKey")
     public R getMissionByKey(@RequestBody GetMissionByKeyReq req) {
         MissionList mission = new MissionList();
@@ -192,7 +196,45 @@ public class Project {
         return R.ok().data(mission);
     }
 
+
+    // 根据负责人员或质检人员key获取任务
+    @PostMapping("/core/getMissionByUserKey")
+    public R getMissionByUserKey(@RequestBody GetMissionByUserKeyReq req) {
+        List<MissionList> mission = new ArrayList<>();
+        try {
+            mission = projectService.getMissionByUserKey(req.getUserKey(),req.getType(),req.getTeamKey());
+        } catch (Exception e) {
+            log.error("获取任务失败！");
+            log.error(e);
+            return R.error();
+        }
+        return R.ok().data(mission);
+    }
+
+    //获取具体的标注或者
+    @PostMapping("/core/getLabelByUserKeyAndMissionKeyAndType")
+    public R getLabelByUserKeyAndMissionKeyAndType(@RequestBody GetLabelByUserKeyAndMissionKeyAndTypeReq req) {
+        List<AudioDataItem> audioDataItemList = new ArrayList<>();
+        try {
+            audioDataItemList = labelDataService.getLabelByUserKeyAndMissionKeyAndType(req.getUserKey(),req.getType(),req.getMissionKey());
+        } catch (Exception e) {
+            log.error("获取任务失败！");
+            log.error(e);
+            return R.error();
+        }
+        return R.ok().data(audioDataItemList);
+    }
+
+
+
+
     //删除任务或者项目
 
-    
+    //根据团队获取任务
+
+
+
+
+
+
 }

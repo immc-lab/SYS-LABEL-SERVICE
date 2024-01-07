@@ -114,4 +114,22 @@
          and
          (#{teamKey} IS NULL OR team_key = #{teamKey})
     </select>
+    <select id="getDoMissionByUserKey" resultType="com.label.core.pojo.vo.project.MissionList">
+     select *
+     from
+     tb_mission
+     where
+     team_key = #{teamKey}
+     and
+     FIND_IN_SET(#{userKey},belong_user_key) > 0
+    </select>
+    <select id="getCheckMissionByUserKey" resultType="com.label.core.pojo.vo.project.MissionList">
+        select *
+        from
+            tb_mission
+        where
+            team_key = #{teamKey}
+          and
+            FIND_IN_SET(#{userKey},check_user_key) > 0
+    </select>
 </mapper>

@@ -74,6 +74,8 @@ public class TeamServiceImpl implements TeamService {
     public void allocationMission(AllocationMissionReq req) {
         //获取需要标注的音频总数
         int count = labelDataService.getAudioCountByMissionKey(req.getMissionKey());
+        //给任务分配标注员
+
         //分配标注员
         //每个人先分配音频数
         int labelerCount = req.getLabeler().size();

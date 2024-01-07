@@ -32,4 +32,9 @@ public interface LabelDataMapper extends BaseMapper<LabelDataItem> {
       List<AudioDataItem> getAudioByMissionKey(@Param("missionKey") String missionKey);
 
       int getAudioCountByMissionKey(@Param("missionKey") String missionKey);
+
+    List<com.label.core.pojo.vo.project.AudioDataItem> getDoLabelByUserKeyAndMissionKeyAndType(@Param("userKey") String userKey, @Param("missionKey") String missionKey);
+
+      List<com.label.core.pojo.vo.project.AudioDataItem> getCheckLabelByUserKeyAndMissionKeyAndType(@Param("userKey") String userKey, @Param("missionKey") String missionKey);
+
 }

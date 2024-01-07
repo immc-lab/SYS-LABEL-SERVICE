@@ -36,6 +36,14 @@ public class Admin {
     @Resource
     private TeamService teamService;
 
+
+    //退出登录
+    @PostMapping("/core/logoutUser")
+    public R logout(HttpServletRequest request) {
+        UserSessionManager.logoutUser((String) request.getSession().getAttribute("loginUser"));
+        return R.ok();
+    }
+
     //    用户注册
     @PostMapping("/core/register")
     public R register(@RequestBody RegisterReq registerReq, HttpServletRequest request) {

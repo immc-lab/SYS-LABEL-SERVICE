@@ -8,6 +8,5 @@ public class GetMissionByKeyReq {
     private String key;
     //团队对应的key
     private String teamKey;
-
-
+    //成员key
 }

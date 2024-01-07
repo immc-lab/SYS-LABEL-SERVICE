@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
@@ -94,5 +95,18 @@ public class SaveProjectServiceImpl implements ProjectService {
     public MissionList getMissionByKey(String key,String teamKey) {
         List<MissionList> missionList = projectMapper.getMissionByKey(key,teamKey);
         return missionList.get(0);
+    }
+
+    @Override
+    public List<MissionList> getMissionByUserKey(String userKey, String type,String teamKey) {
+        List<MissionList> missionList = new ArrayList<>();
+        if("0".equals(type)){
+            //获取需要标注的任务列表
+             missionList = projectMapper.getDoMissionByUserKey(userKey,teamKey);
+        }else {
+            //获取质检列表
+             missionList = projectMapper.getCheckMissionByUserKey(userKey,teamKey);
+        }
+        return missionList;
     }
 }

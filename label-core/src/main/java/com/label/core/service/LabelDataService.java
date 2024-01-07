@@ -24,4 +24,7 @@ public interface LabelDataService {
     List<AudioDataItem> getAudioByMissionKey(String missionKey);
 
      int getAudioCountByMissionKey(String missionKey);
+
+    List<com.label.core.pojo.vo.project.AudioDataItem> getLabelByUserKeyAndMissionKeyAndType(String userKey, String type, String missionKey);
+
 }

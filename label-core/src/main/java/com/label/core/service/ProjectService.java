@@ -33,4 +33,5 @@ public interface ProjectService {
 
     MissionList getMissionByKey(String key,String teamKey);
 
+    List<MissionList> getMissionByUserKey(String userKey, String type,String teamKey);
 }

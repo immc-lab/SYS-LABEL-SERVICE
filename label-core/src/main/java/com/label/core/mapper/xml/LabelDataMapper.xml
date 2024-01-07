@@ -75,5 +75,25 @@
         where missionKey = #{missionKey}
           AND allocation = "0"
     </select>
+    <select id="getDoLabelByUserKeyAndMissionKeyAndType"
+            resultType="com.label.core.pojo.vo.project.AudioDataItem">
+
+     select * from
+     tb_label_data
+     where
+     mission_key = #{missionKey}
+     and
+     belong_user_key = #{userKey}
+    </select>
+    <select id="getCheckLabelByUserKeyAndMissionKeyAndType"
+            resultType="com.label.core.pojo.vo.project.AudioDataItem">
+
+        select * from
+            tb_label_data
+        where
+            mission_key = #{missionKey}
+          and
+            check_user_key = #{userKey}
+    </select>
 
 </mapper>
